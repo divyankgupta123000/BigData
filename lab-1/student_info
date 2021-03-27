@@ -1,0 +1,173 @@
+bmsce@bmsce-Precision-T1700:~$ cd cassandra/apache-cassandra-3.11.0/
+bmsce@bmsce-Precision-T1700:~/cassandra/apache-cassandra-3.11.0$ cd bin
+bmsce@bmsce-Precision-T1700:~/cassandra/apache-cassandra-3.11.0/bin$ ./cqlsh
+Connected to Test Cluster at 127.0.0.1:9042.
+[cqlsh 5.0.1 | Cassandra 3.11.4 | CQL spec 3.4.4 | Native protocol v4]
+Use HELP for help.
+cqlsh> 
+[1]+  Stopped                 ./cqlsh
+bmsce@bmsce-Precision-T1700:~/cassandra/apache-cassandra-3.11.0/bin$ ./cqlsh
+Connected to Test Cluster at 127.0.0.1:9042.
+[cqlsh 5.0.1 | Cassandra 3.11.4 | CQL spec 3.4.4 | Native protocol v4]
+cqlsh> create keyspace students with replication = {'class' : Simple Strategy 'replication_factor':1};
+SyntaxException: line 1:62 no viable alternative at input 'Strategy' (... replication = {'class' : [Simple] Strategy...)
+cqlsh> 
+cqlsh> 
+cqlsh> create keyspace students with replication = {'class' : Simple Strategy 'replication_factor':1};
+SyntaxException: line 1:62 no viable alternative at input 'Strategy' (... replication = {'class' : [Simple] Strategy...)
+cqlsh> create keyspace "Students" with replication = {'class': 'SimpleStrategy', 'replication_factor':1};
+cqlsh> describe keyspaces
+
+"Students"     system_auth  system_distributed
+system_schema  system       system_traces     
+
+cqlsh> use Students
+   ... create table student_info(rollno int primary key,name text,datejoin timestamp, marks percent);
+Improper use command.
+cqlsh> use Students
+   ... ;
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Keyspace 'students' does not exist"
+cqlsh> use students;
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Keyspace 'students' does not exist"
+cqlsh> use Students;
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Keyspace 'students' does not exist"
+cqlsh> use Students;
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Keyspace 'students' does not exist"
+cqlsh> describe keyspaces
+
+"Students"     system_auth  system_distributed
+system_schema  system       system_traces     
+
+cqlsh> use Students
+   ... ;
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Keyspace 'students' does not exist"
+cqlsh> use students;
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Keyspace 'students' does not exist"
+cqlsh> use "Students";
+cqlsh:Students> create table student_info(rollno int primary key,name text,datejoin timestamp, marks percent);
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Unknown type Students.percent"
+cqlsh:Students> create table student_info(rollno int primary key,name text,datejoin timestamp, marks P);
+?            CAPTURE      CONSISTENCY  DEBUG        DESCRIBE     GRANT        LIST         REVOKE       SHOW         TRUNCATE     exit
+ALTER        CLEAR        COPY         DELETE       DROP         HELP         LOGIN        SELECT       SOURCE       UPDATE       quit
+BEGIN        CLS          CREATE       DESC         EXPAND       INSERT       PAGING       SERIAL       TRACING      USE          
+cqlsh:Students> create table student_info(rollno int primary key,name text,datejoin timestamp, marks P);
+SyntaxException: line 1:85 no viable alternative at input 'P' (... text,datejoin timestamp, marks [P]...)
+cqlsh:Students> create table student_info(rollno int primary key,name text dateofjoin timestamp,marks double);
+SyntaxException: line 1:59 no viable alternative at input 'dateofjoin' (...rollno int primary key,name [text] dateofjoin...)
+cqlsh:Students> create table student_info(rollno int primary key,name text, dateofjoin timestamp,marks double);
+cqlsh:Students> insert into student_info(1,"ABC",2020-03-09,99.0);
+SyntaxException: line 1:25 no viable alternative at input '1' (insert into student_info([1]...)
+cqlsh:Students> insert into student_infO(rollno,name,dateofjoin,marks) values(1,"ABC",2020-03-09,99.0);
+SyntaxException: line 1:69 no viable alternative at input ',' (...,dateofjoin,marks) values(1,["AB]C",...)
+cqlsh:Students> insert into student_info(rollno,name,dateofjoin,marks) values(1,"ABC",2020-03-09,99.0);
+SyntaxException: line 1:69 no viable alternative at input ',' (...,dateofjoin,marks) values(1,["AB]C",...)
+cqlsh:Students> insert into student_info (rollno,name,dateofjoin,marks) VALUES (1,"ABC",2020-03-09,99.0);
+SyntaxException: line 1:71 no viable alternative at input ',' (...dateofjoin,marks) VALUES (1,["AB]C",...)
+cqlsh:Students> insert into student_info (rollno,name,dateofjoin,marks) VALUES (1,"AB",2020-03-09,99.0);
+SyntaxException: line 1:70 no viable alternative at input ',' (...dateofjoin,marks) VALUES (1,["A]B",...)
+cqlsh:Students> insert into student_info (rollno,name,dateofjoin,marks) VALUES (1,",2020-03-09,99.0);
+            ... 
+            ... 
+            ... 
+            ... ;
+Statements are terminated with a ';'.  You can press CTRL-C to cancel an incomplete statement.
+cqlsh:Students> insert into student_info (rollno,name,dateofjoin,marks) VALUES (1,'ABC',2020-03-09,99.0);
+SyntaxException: line 1:76 mismatched input '-03' expecting ')' (...) VALUES (1,'ABC',2020[-03]...)
+cqlsh:Students> insert into student_info (rollno,name,dateofjoin,marks) VALUES (1,'ABC','2020-03-09',99.0);
+cqlsh:Students> insert into student_info (rollno,name,dateofjoin,marks) VALUES (2,'XYZ','2020-04-09',69.0);
+cqlsh:Students> insert into student_info (rollno,name,dateofjoin,marks) VALUES (3,'Ram','2020-05-09',60.0);
+cqlsh:Students> insert into student_info (rollno,name,dateofjoin,marks) VALUES (4,'Ram','2020-05-10',100.0);
+cqlsh:Students> insert into student_info (rollno,name,dateofjoin,marks) VALUES (5,'Shyam','2020-05-10',100.0);
+cqlsh:Students> select * from student_info;
+
+ rollno | dateofjoin                      | marks | name
+--------+---------------------------------+-------+-------
+      5 | 2020-05-09 18:30:00.000000+0000 |   100 | Shyam
+      1 | 2020-03-08 18:30:00.000000+0000 |    99 |   ABC
+      2 | 2020-04-08 18:30:00.000000+0000 |    69 |   XYZ
+      4 | 2020-05-09 18:30:00.000000+0000 |   100 |   Ram
+      3 | 2020-05-08 18:30:00.000000+0000 |    60 |   Ram
+
+(5 rows)
+cqlsh:Students> select b* from student_info where rollno in (1,5,2);
+SyntaxException: line 1:8 no viable alternative at input '*' (select [b]*...)
+cqlsh:Students> select * from student_info where rollno in (1,5,2);
+
+ rollno | dateofjoin                      | marks | name
+--------+---------------------------------+-------+-------
+      1 | 2020-03-08 18:30:00.000000+0000 |    99 |   ABC
+      2 | 2020-04-08 18:30:00.000000+0000 |    69 |   XYZ
+      5 | 2020-05-09 18:30:00.000000+0000 |   100 | Shyam
+
+(3 rows)
+cqlsh:Students> create index on student_info(name);
+cqlsh:Students> select * from student_info where name = 'XYZ';
+
+ rollno | dateofjoin                      | marks | name
+--------+---------------------------------+-------+------
+      2 | 2020-04-08 18:30:00.000000+0000 |    69 |  XYZ
+
+(1 rows)
+cqlsh:Students> insert into student_info (rollno,name,dateofjoin,marks) VALUES (6,'Shyam','2020-05-10',10.0);
+cqlsh:Students> select * from student_info where name = 'Shyam';
+
+ rollno | dateofjoin                      | marks | name
+--------+---------------------------------+-------+-------
+      5 | 2020-05-09 18:30:00.000000+0000 |   100 | Shyam
+      6 | 2020-05-09 18:30:00.000000+0000 |    10 | Shyam
+
+(2 rows)
+cqlsh:Students> select * from student_info limit 2;
+
+ rollno | dateofjoin                      | marks | name
+--------+---------------------------------+-------+-------
+      5 | 2020-05-09 18:30:00.000000+0000 |   100 | Shyam
+      1 | 2020-03-08 18:30:00.000000+0000 |    99 |   ABC
+
+(2 rows)
+cqlsh:Students> update student_info set name ="Ravan" where rollno=4;
+SyntaxException: line 1:38 no viable alternative at input 'where' (update student_info set name =["Rava]n" where...)
+cqlsh:Students> update student_info set name ='Ravan' where rollno=4;
+cqlsh:Students> select * from student_info;
+
+ rollno | dateofjoin                      | marks | name
+--------+---------------------------------+-------+-------
+      5 | 2020-05-09 18:30:00.000000+0000 |   100 | Shyam
+      1 | 2020-03-08 18:30:00.000000+0000 |    99 |   ABC
+      2 | 2020-04-08 18:30:00.000000+0000 |    69 |   XYZ
+      4 | 2020-05-09 18:30:00.000000+0000 |   100 | Ravan
+      6 | 2020-05-09 18:30:00.000000+0000 |    10 | Shyam
+      3 | 2020-05-08 18:30:00.000000+0000 |    60 |   Ram
+
+(6 rows)
+cqlsh:Students> delete from student_info where rollno=1;
+cqlsh:Students> select * from student_info;
+
+ rollno | dateofjoin                      | marks | name
+--------+---------------------------------+-------+-------
+      5 | 2020-05-09 18:30:00.000000+0000 |   100 | Shyam
+      2 | 2020-04-08 18:30:00.000000+0000 |    69 |   XYZ
+      4 | 2020-05-09 18:30:00.000000+0000 |   100 | Ravan
+      6 | 2020-05-09 18:30:00.000000+0000 |    10 | Shyam
+      3 | 2020-05-08 18:30:00.000000+0000 |    60 |   Ram
+
+(5 rows)
+cqlsh:Students> delete from student_info where name='XYZ';
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Some partition key parts are missing: rollno"
+cqlsh:Students> select * from student_info;
+
+ rollno | dateofjoin                      | marks | name
+--------+---------------------------------+-------+-------
+      5 | 2020-05-09 18:30:00.000000+0000 |   100 | Shyam
+      2 | 2020-04-08 18:30:00.000000+0000 |    69 |   XYZ
+      4 | 2020-05-09 18:30:00.000000+0000 |   100 | Ravan
+      6 | 2020-05-09 18:30:00.000000+0000 |    10 | Shyam
+      3 | 2020-05-08 18:30:00.000000+0000 |    60 |   Ram
+
+(5 rows)
+cqlsh:Students> delete from student_info where name='XYZ';
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Some partition key parts are missing: rollno"
+cqlsh:Students> -                                                                                                                       //////////////////////////////////////////////////////////////////////////////////////////////////////
+            ... ;
+SyntaxException: line 1:0 no viable alternative at input '-' ([-]...)
+cqlsh:Students> 
