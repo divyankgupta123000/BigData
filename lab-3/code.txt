@@ -1,0 +1,38 @@
+>use Student
+switched to db Student
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+mydb    0.000GB
+
+> db.Stud.insert({ rollno: 10, name:'ABBA', age: 21, contactno: 8888222331, emailid: 'abba.cs@bmsce.ac.in' })
+WriteResult({ "nInserted" : 1 })
+> db.Stud.insert({ rollno: 11, name:'ABC', age: 21, contactno: 8888332331, emailid: 'abc.cs@bmsce.ac.in' })
+WriteResult({ "nInserted" : 1 })
+> db.Stud.insert({ rollno: 12, name:'BCA', age: 20, contactno: 9885332331, emailid: 'bca.cs@bmsce.ac.in' })
+WriteResult({ "nInserted" : 1 })
+
+> show dbs
+Student  0.000GB
+admin    0.000GB
+config   0.000GB
+local    0.000GB
+mydb     0.000GB
+
+> db.Stud.update({emailid: 'abba.cs@bmsce.ac.in'},{$set:{emailid: 'aba.cs@bmsce.ac.in'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.getCollection('Stud').update({"rollno": 11},{$set:{"name": "FEM"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+C:\Users\divyank>mongoexport --collection=Stud --db=Student --out=dbevent.csv
+2021-04-03T13:31:16.381+0530    connected to: mongodb://localhost/
+2021-04-03T13:31:16.398+0530    exported 3 records
+
+> use Student
+switched to db Student
+> db.dropDatabase()
+{ "dropped" : "Student", "ok" : 1 }
+
+C:\Users\divyank>mongoimport --type=csv --db=Student --collection=Stud --headerline --file="C:\Users\divyank\dbevent.csv"

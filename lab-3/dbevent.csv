@@ -1,0 +1,3 @@
+{"_id":{"$oid":"60681162ee23a875f10cc5f1"},"rollno":10,"name":"ABBA","age":21,"contactno":"8888222331","emailid":"aba.cs@bmsce.ac.in"}
+{"_id":{"$oid":"60681182ee23a875f10cc5f2"},"rollno":11,"name":"FEM","age":21,"contactno":"8888332331","emailid":"abc.cs@bmsce.ac.in"}
+{"_id":{"$oid":"606811a7ee23a875f10cc5f3"},"rollno":12,"name":"BCA","age":20,"contactno":"9885332331","emailid":"bca.cs@bmsce.ac.in"}
